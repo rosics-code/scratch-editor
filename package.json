@@ -16,11 +16,11 @@
   "author": "Scratch Foundation",
   "workspaces": [
     "packages/task-herder",
+    "packages/scratch-storage",
     "packages/scratch-svg-renderer",
     "packages/scratch-render",
     "packages/scratch-vm",
-    "packages/scratch-gui",
-    "packages/scratch-storage"
+    "packages/scratch-gui"
   ],
   "scripts": {
     "build": "cross-env NODE_ENV=production npm run --workspaces build",
