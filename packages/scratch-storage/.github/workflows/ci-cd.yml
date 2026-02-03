@@ -1,0 +1,58 @@
+name: CI/CD
+
+on:
+    workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+    push: # Runs whenever a commit is pushed to the repository
+
+concurrency:
+    group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+    cancel-in-progress: true
+
+permissions:
+    contents: write # publish a GitHub release
+    pages: write # deploy to GitHub Pages
+    issues: write # comment on released issues
+    pull-requests: write # comment on released pull requests
+
+jobs:
+    ci-cd:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+            - uses: wagoid/commitlint-github-action@5ce82f5d814d4010519d15f0552aec4f17a1e1fe # v5
+              if: github.event_name == 'pull_request'
+
+            - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6
+              with:
+                  cache: "npm"
+                  node-version-file: ".nvmrc"
+
+            - name: Info
+              run: |
+                  cat <<EOF
+                  Node version: $(node --version)
+                  NPM version: $(npm --version)
+                  GitHub ref: ${{ github.ref }}
+                  GitHub head ref: ${{ github.head_ref }}
+                  EOF
+
+            - run: npm ci
+
+            - name: Pre-build tests
+              run: |
+                  npm run clean
+                  npm run test
+
+            - name: Build
+              run: npm run build
+
+            - name: Post-build tests
+              run: npm run test:build
+
+            - name: Semantic release (configured to run dry if branch is other than 'develop')
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  npx --no -- semantic-release
