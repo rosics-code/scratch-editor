@@ -19,7 +19,8 @@
     "packages/scratch-svg-renderer",
     "packages/scratch-render",
     "packages/scratch-vm",
-    "packages/scratch-gui"
+    "packages/scratch-gui",
+    "packages/scratch-storage"
   ],
   "scripts": {
     "build": "cross-env NODE_ENV=production npm run --workspaces build",
