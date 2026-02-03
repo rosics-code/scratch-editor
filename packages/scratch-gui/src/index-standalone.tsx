@@ -14,7 +14,7 @@ export {setAppElement} from 'react-modal';
 export * from './gui-config';
 export * from './exported-reducers';
 
-export * from 'scratch-storage';
+export * from '@scratch/scratch-storage';
 
 export {default as buildDefaultProject} from './lib/default-project';
 

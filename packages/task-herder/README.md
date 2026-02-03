@@ -25,7 +25,7 @@ Queue will then resolve or reject based on the outcome of the task.
 ## Usage
 
 ```javascript
-import TaskQueue from 'task-herder'
+import TaskQueue from '@scratch/task-herder'
 
 const queue = new TaskQueue({
   // The maximum number of tokens in the bucket controls the burst limit

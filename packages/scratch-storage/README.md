@@ -36,7 +36,7 @@ npm install
 ### From Node.js / Webpack
 
 ```js
-var storage = require('scratch-storage');
+var storage = require('@scratch/scratch-storage');
 // continue to "Storage API Quick Start" section below
 ```
 
