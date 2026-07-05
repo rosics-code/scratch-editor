@@ -51,7 +51,8 @@ button::-moz-focus-inner {
     transition: transform, box-shadow 0.5s;
 }
 
-.main-button:hover {
+.main-button:hover,
+.menu-container.expanded .main-button:hover {  
   transform: scale(1.1);
   box-shadow: 0 0 0 6px $looks-transparent;
 }
